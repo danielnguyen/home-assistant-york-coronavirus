@@ -1,10 +1,8 @@
 {
-    "name": "Blueprint",
+    "name": "Toronto COVID-19 Tracker",
     "hacs": "0.24.0",
     "domains": [
-        "binary_sensor",
-        "sensor",
-        "switch"
+        "sensor"
     ],
     "iot_class": "Cloud Polling",
     "homeassistant": "0.108.0"
