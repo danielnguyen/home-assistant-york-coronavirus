@@ -1,15 +1,13 @@
 """Consts"""
-DOMAIN = 'toronto_coronavirus'
+DOMAIN = 'york_coronavirus'
 DOMAIN_DATA = '{}_data'.format(DOMAIN)
 VERSION = '0.0.1'
-REQUIRED_FILES = ['sensor.py', 'const.py', 'toronto_coronavirus.py']
-ISSUE_URL = 'https://github.com/danielnguyen/home-assistant-toronto-covid19/issues'
+REQUIRED_FILES = ['sensor.py', 'const.py', 'york_coronavirus.py']
+ISSUE_URL = 'https://github.com/danielnguyen/home-assistant-york-coronavirus/issues'
 PLATFORMS = ['sensor']
 
 DATA_PATH = "/data"
-TPH_CORONAVIRUS_FILEID = '1euhrML0rkV_hHF1thiA0G5vSSeZCqxHY'
-TPH_CORONAVIRUS_XLSX_FILENAME = "CityofToronto_COVID-19_Data.xlsx"
-
+YR_CORONAVIRUS_CSV_FILENAME = "YR_CaseData.csv"
 STARTUP = """
 ----------------------------------------------
 {name}

@@ -1,0 +1,15 @@
+{
+  "domain": "york_coronavirus",
+  "name": "York Region Coronavirus Tracker",
+  "documentation": "https://github.com/danielnguyen/home-assistant-york-coronavirus",
+  "issue_tracker": "https://github.com/danielnguyen/home-assistant-york-coronavirus/issues",
+  "dependencies": [],
+  "config_flow": true,
+  "codeowners": [
+    "@danielnguyen"
+  ],
+  "requirements": [
+    "pandas==1.0.4",
+    "xlrd==1.2.0"
+  ]
+}

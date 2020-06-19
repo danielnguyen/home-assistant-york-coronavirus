@@ -1,1 +1,1 @@
-# Toronto COVID-19 Tracker
+# York Region COVID-19 Tracker

@@ -4,7 +4,7 @@ import requests
 from homeassistant.helpers import discovery
 
 from .const import *  # pylint: disable=wildcard-import
-from .toronto_coronavirus import get_cases
+from .york_coronavirus import get_cases
 
 _LOGGER = logging.getLogger(__name__)
 

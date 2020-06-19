@@ -1,5 +1,5 @@
 {
-    "name": "Toronto COVID-19 Tracker",
+    "name": "York Region COVID-19 Tracker",
     "hacs": "0.24.0",
     "domains": [
         "sensor"

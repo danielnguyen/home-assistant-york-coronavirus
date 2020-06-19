@@ -1,7 +1,7 @@
 """
-A component which pulls down the daily Toronto Public Health COVID-19 updates.
+A component which pulls down the daily York Region Public Health COVID-19 updates.
 For more details about this component, please refer to the documentation at
-https://github.com/danielnguyen/home-assistant-toronto-covid19
+https://github.com/danielnguyen/home-assistant-york-coronavirus
 """
 import datetime
 import logging
@@ -13,7 +13,7 @@ from homeassistant.helpers.entity import Entity
 from . import update_data
 from .const import DOMAIN_DATA
 from .const import VERSION
-from .toronto_coronavirus import get_cases
+from .york_coronavirus import get_cases
 
 __version__ = VERSION
 _LOGGER = logging.getLogger(__name__)
@@ -27,21 +27,21 @@ SENSORS = {
 
 DEFAULT_SCAN_INTERVAL = timedelta(hours=1)
 SCAN_INTERVAL = timedelta(hours=1)
-COMPONENT_REPO = "https://github.com/danielnguyen/home-assistant-toronto-covid19/"
+COMPONENT_REPO = "https://github.com/danielnguyen/home-assistant-york-coronavirus/"
 
 # Configure and add devices
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     sensors = []
     for (k, v) in SENSORS.items():
-        sensors.append(TorontoCoronavirusSensor(hass, k))
+        sensors.append(YorkCoronavirusSensor(hass, k))
     async_add_entities(sensors, True)
 
-class TorontoCoronavirusSensor(Entity):
+class YorkCoronavirusSensor(Entity):
 
     def __init__(self, hass, case_type: str):
         """Initialize the sensor."""
         self._attr =  {}
-        self._name = f"Toronto Coronavirus {case_type}"
+        self._name = f"York Region Coronavirus {case_type}"
         self.hass = hass
         self.case_type = case_type
     
