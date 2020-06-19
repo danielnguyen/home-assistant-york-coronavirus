@@ -32,8 +32,8 @@ def get_cases():
     cases = {}
         
     cases["all"] = len(data)
-    cases["active"] = len(data1.query("Status == 'Hospitalized' or Status == 'Self-Isolating' or Status == 'Under Investigation'"))
-    cases["recovered"] = len(data.query("Status == 'Resolved'", inplace = False))
-    cases["deaths"] = len(data.query("Status == 'Deceased'", inplace = False))
+    cases["active"] = len(data.query("Status == 'Hospitalized' or Status == 'Self-Isolating' or Status == 'Under Investigation'"))
+    cases["recovered"] = len(data.query("Status == 'Resolved'"))
+    cases["deaths"] = len(data.query("Status == 'Deceased'"))
     
     return cases
