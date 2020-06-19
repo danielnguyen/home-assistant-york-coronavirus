@@ -9,6 +9,7 @@
     "@danielnguyen"
   ],
   "requirements": [
-    "pandas==1.0.4"
+    "pandas==1.0.4",
+    "xlrd==1.2.0"
   ]
 }
