@@ -1,3 +1,5 @@
+import os
+import pandas
 import requests
 
 def download_file_from_google_drive(id, destination):
@@ -32,3 +34,15 @@ def save_response_content(response, destination):
         for chunk in response.iter_content(CHUNK_SIZE):
             if chunk: # filter out keep-alive new chunks
                 f.write(chunk)
+
+def extract_spreadsheets_to_json(excelFile, destDir, sheet_names):
+    """Extracts and converts the requested spreadsheets to JSON files."""
+
+    for sheet_name in sheet_names:
+        # Read the spreadsheet
+        excel_data_df = pandas.read_excel(excelFile, sheet_name=sheet_name)
+        # Convert the sheet to JSON
+        json_str = excel_data_df.to_json(orient='records')
+        # Save it to a file
+        with open(os.path.join(destDir, sheet_name + '.json'), "w") as json_file:
+            json_file.write(json_str)
