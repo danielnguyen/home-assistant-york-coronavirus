@@ -1,5 +1,5 @@
 """Consts"""
-DOMAIN = 'toronto_covid19'
+DOMAIN = 'toronto_coronavirus'
 DOMAIN_DATA = '{}_data'.format(DOMAIN)
 VERSION = '0.0.1'
 REQUIRED_FILES = ['sensor.py', 'const.py', 'toronto_coronavirus.py']
