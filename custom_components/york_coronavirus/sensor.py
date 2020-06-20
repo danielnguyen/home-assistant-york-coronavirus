@@ -11,7 +11,7 @@ from dateutil import parser
 
 from homeassistant.helpers.entity import Entity
 from . import update_data
-from .const import CONF_MUNICIPALITIES, DOMAIN_DATA, VERSION
+from .const import CONF_MUNICIPALITIES, DOMAIN, DOMAIN_DATA, VERSION
 
 __version__ = VERSION
 _LOGGER = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ COMPONENT_REPO = "https://github.com/danielnguyen/home-assistant-york-coronaviru
 # Configure and add devices
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     sensors = []
-    for municipality in config[CONF_MUNICIPALITIES]:
+    for municipality in hass.data[DOMAIN][CONF_MUNICIPALITIES]:
         for case_type in CASE_TYPES:
             sensors.append(YorkCoronavirusSensor(hass, municipality, case_type))
     async_add_entities(sensors, True)
@@ -40,7 +40,7 @@ class YorkCoronavirusSensor(Entity):
     def __init__(self, hass, municipality: str, case_type: str):
         """Initialize the sensor."""
         self._state =  {}
-        self._name = f"York Region Coronavirus {case_type}"
+        self._name = f"{municipality} Coronavirus {case_type}"
         self.hass = hass
         self.municipality = municipality
         self.case_type = case_type
@@ -63,7 +63,7 @@ class YorkCoronavirusSensor(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
-        return "people"
+        return "cases"
 
     async def async_update(self):
         """Update the sensor."""

@@ -16,7 +16,7 @@ CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(
             {
-                vol.Required(CONF_MUNICIPALITIES): vol.All(cv.ensure_list, [cv.string]),
+                vol.Optional(CONF_MUNICIPALITIES, default=[]): vol.All(cv.ensure_list, [cv.string]),
             }
         )
     },
@@ -35,6 +35,19 @@ async def async_setup(hass, config):
     if not file_check:
         return False
 
+    # Retrieve the requested municipalities
+    municipalities = []
+    config = config[DOMAIN]
+
+    if len(config[CONF_MUNICIPALITIES]) < 1:
+        municipalities = get_all_municipalities()
+    else:
+        for municipality in config[CONF_MUNICIPALITIES]:
+            municipalities.append(municipality)
+    hass.data[DOMAIN] = {
+        CONF_MUNICIPALITIES: municipalities
+    }
+
     # Create DATA dict
     hass.data[DOMAIN_DATA] = {}
 
@@ -47,19 +60,9 @@ async def async_setup(hass, config):
 
 async def update_data(hass):
     """Update data."""
-
-    municipalities = []
-    config = hass.config[DOMAIN]
-
-    if len(config[CONF_MUNICIPALITIES]) < 1:
-        municipalities = get_all_municipalities()
-    else:
-        for municipality in config[CONF_MUNICIPALITIES]:
-            municipalities.append(municipality)
-
     cases_by_municipality = {}
     try:
-        for municipality in municipalities:
+        for municipality in hass.data[DOMAIN][CONF_MUNICIPALITIES]:
             cases_by_municipality[municipality] = get_cases(municipality)
         hass.data[DOMAIN_DATA] = cases_by_municipality
     except Exception as error:  # pylint: disable=broad-except
