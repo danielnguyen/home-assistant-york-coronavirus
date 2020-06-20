@@ -3,7 +3,7 @@
 To get started put `/custom_components/home-assistant-york-coronavirus/` here:
 `<config directory>/custom_components/home-assistant-york-coronavirus/`
 
-**Example configuration.yaml:**
+**Add to configuration.yaml:**
 
 ```yaml
 york_coronavirus:
