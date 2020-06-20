@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from .const import DATA_PATH
 from .const import YR_CORONAVIRUS_CSV_FILENAME
 
-def get_cases():
+def get_cases(municipality: str):
     """
     Returns an object with all of the case counts.
     e.g. {
@@ -19,12 +19,11 @@ def get_cases():
         "deaths": 5,
     }
     """
-    
     # Making data frame from csv file 
     data = pandas.read_csv(os.path.join(DATA_PATH, YR_CORONAVIRUS_CSV_FILENAME));
     
     # get rid of all other data except for Municipality of interest. 
-    data.query("Municipality == 'Markham'", inplace=True)
+    data.query("Municipality == '{}'".format(municipality), inplace=True)
 
     cases = {}
         
@@ -34,3 +33,12 @@ def get_cases():
     cases["deaths"] = len(data.query("Status == 'Deceased'"))
     
     return cases
+
+def get_all_municipalities():
+    """
+    Returns a list of all municipalities found in the report.
+    """
+    # Making data frame from csv file 
+    data = pandas.read_csv(os.path.join(DATA_PATH, YR_CORONAVIRUS_CSV_FILENAME));
+
+    return data.Municipality.unique()

@@ -1,14 +1,27 @@
 import os
 import logging
 import requests
+import voluptuous as vol
+
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 
 from .const import *  # pylint: disable=wildcard-import
 from .york_coronavirus import get_cases
+from .york_coronavirus import get_all_municipalities
 
 _LOGGER = logging.getLogger(__name__)
 
-  # pylint: disable=unused-argument
+CONFIG_SCHEMA = vol.Schema(
+    {
+        DOMAIN: vol.Schema(
+            {
+                vol.Required(CONF_MUNICIPALITIES): vol.All(cv.ensure_list, [cv.string]),
+            }
+        )
+    },
+    extra=vol.ALLOW_EXTRA,
+)
 
 async def async_setup(hass, config):
     """Set up this component."""
@@ -34,9 +47,21 @@ async def async_setup(hass, config):
 
 async def update_data(hass):
     """Update data."""
+
+    municipalities = []
+    config = hass.config[DOMAIN]
+
+    if len(config[CONF_MUNICIPALITIES]) < 1:
+        municipalities = get_all_municipalities()
+    else:
+        for municipality in config[CONF_MUNICIPALITIES]:
+            municipalities.append(municipality)
+
+    cases_by_municipality = {}
     try:
-        jsondata = get_cases()
-        hass.data[DOMAIN_DATA] = jsondata
+        for municipality in municipalities:
+            cases_by_municipality[municipality] = get_cases(municipality)
+        hass.data[DOMAIN_DATA] = cases_by_municipality
     except Exception as error:  # pylint: disable=broad-except
         _LOGGER.error("Could not update data - %s", error)
 

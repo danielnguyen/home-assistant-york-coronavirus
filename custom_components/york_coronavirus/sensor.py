@@ -11,14 +11,14 @@ from dateutil import parser
 
 from homeassistant.helpers.entity import Entity
 from . import update_data
+from .const import CONF_MUNICIPALITIES
 from .const import DOMAIN_DATA
 from .const import VERSION
-from .york_coronavirus import get_cases
 
 __version__ = VERSION
 _LOGGER = logging.getLogger(__name__)
 
-SENSORS = {
+CASE_TYPES = {
     "all": "mdi:hospital-box",
     "active": "mdi:emoticon-sad-outline",
     "recovered": "mdi:emoticon-happy-outline",
@@ -32,23 +32,25 @@ COMPONENT_REPO = "https://github.com/danielnguyen/home-assistant-york-coronaviru
 # Configure and add devices
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     sensors = []
-    for (k, v) in SENSORS.items():
-        sensors.append(YorkCoronavirusSensor(hass, k))
+    for municipality in config[CONF_MUNICIPALITIES]:
+        for case_type in CASE_TYPES:
+            sensors.append(YorkCoronavirusSensor(hass, municipality, case_type))
     async_add_entities(sensors, True)
 
 class YorkCoronavirusSensor(Entity):
 
-    def __init__(self, hass, case_type: str):
+    def __init__(self, hass, municipality: str, case_type: str):
         """Initialize the sensor."""
-        self._attr =  {}
+        self._state =  {}
         self._name = f"York Region Coronavirus {case_type}"
         self.hass = hass
+        self.municipality = municipality
         self.case_type = case_type
     
     @property
     def icon(self):
         """Return the icon."""
-        return SENSORS[self.case_type]
+        return CASE_TYPES[self.case_type]
 
     @property
     def name(self):
@@ -58,7 +60,7 @@ class YorkCoronavirusSensor(Entity):
     @property
     def state(self):
         """Return the state."""
-        return self._attr
+        return self._state
     
     @property
     def unit_of_measurement(self):
@@ -68,8 +70,8 @@ class YorkCoronavirusSensor(Entity):
     async def async_update(self):
         """Update the sensor."""
         await update_data(self.hass)
-        updated_data = self.hass.data[DOMAIN_DATA].get(self.case_type)
+        updated_data = self.hass.data[DOMAIN_DATA][municipality].get(self.case_type)
         if updated_data is None:
-            updated_data = self._attr
+            updated_data = self._state
         else:
-            self._attr = updated_data
+            self._state = updated_data
