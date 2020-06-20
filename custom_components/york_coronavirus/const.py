@@ -6,6 +6,8 @@ REQUIRED_FILES = ["sensor.py", "const.py", "york_coronavirus.py"]
 ISSUE_URL = "https://github.com/danielnguyen/home-assistant-york-coronavirus/issues"
 PLATFORMS = ["sensor"]
 
+CONF_MUNICIPALITIES = "municipalities"
+
 DATA_PATH = "/data"
 YR_CORONAVIRUS_CSV_FILENAME = "YR_CaseData.csv"
 STARTUP = """
@@ -17,5 +19,3 @@ If you have any issues with this you need to open an issue here:
 {issueurl}
 ----------------------------------------------
 """
-
-CONF_MUNICIPALITIES: "municipalities"
