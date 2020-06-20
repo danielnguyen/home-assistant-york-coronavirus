@@ -6,8 +6,7 @@ import os
 import pandas
 
 from dataclasses import dataclass
-from .const import DATA_PATH
-from .const import YR_CORONAVIRUS_CSV_FILENAME
+from .const import DATA_PATH, YR_CORONAVIRUS_CSV_FILENAME
 
 def get_cases(municipality: str):
     """

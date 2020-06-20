@@ -6,7 +6,14 @@ import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 
-from .const import *  # pylint: disable=wildcard-import
+from .const import 
+    CONF_MUNICIPALITIES,
+    DOMAIN, DOMAIN_DATA,
+    ISSUE_URL,
+    PLATFORMS,
+    REQUIRED_FILES,
+    STARTUP,
+    VERSION
 from .york_coronavirus import get_cases
 from .york_coronavirus import get_all_municipalities
 

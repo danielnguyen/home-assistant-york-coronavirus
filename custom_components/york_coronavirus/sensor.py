@@ -11,9 +11,7 @@ from dateutil import parser
 
 from homeassistant.helpers.entity import Entity
 from . import update_data
-from .const import CONF_MUNICIPALITIES
-from .const import DOMAIN_DATA
-from .const import VERSION
+from .const import CONF_MUNICIPALITIES, DOMAIN_DATA, VERSION
 
 __version__ = VERSION
 _LOGGER = logging.getLogger(__name__)
