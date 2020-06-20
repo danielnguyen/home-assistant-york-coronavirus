@@ -68,7 +68,7 @@ class YorkCoronavirusSensor(Entity):
     async def async_update(self):
         """Update the sensor."""
         await update_data(self.hass)
-        updated_data = self.hass.data[DOMAIN_DATA][municipality].get(self.case_type)
+        updated_data = self.hass.data[DOMAIN_DATA][self.municipality].get(self.case_type)
         if updated_data is None:
             updated_data = self._state
         else:
