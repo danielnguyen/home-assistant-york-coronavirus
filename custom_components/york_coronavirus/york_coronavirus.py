@@ -21,7 +21,7 @@ def get_cases():
     """
     
     # Making data frame from csv file 
-    data = pandas.read_csv(YR_CORONAVIRUS_CSV_FILENAME);
+    data = pandas.read_csv(os.path.join(DATA_PATH, YR_CORONAVIRUS_CSV_FILENAME));
     
     # get rid of all other data except for Municipality of interest. 
     data.query("Municipality == 'Markham'", inplace=True)
